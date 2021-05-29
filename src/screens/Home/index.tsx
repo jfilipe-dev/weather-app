@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 
 import { useCities } from '../../hooks/Cities';
 
@@ -14,7 +14,8 @@ import {
   HeaderAddCityButtonText,
   Icon,
 } from './styles';
-import apiWether from '../../services/apiWether';
+import apiWeather from '../../services/apiWeather';
+import { colors } from '../../config/styles';
 
 interface Weather {
   description: string;
@@ -33,7 +34,7 @@ interface Daily {
   weather: Weather[];
 }
 
-interface CityWether {
+interface CityWeather {
   current: {
     dt: number;
     temp: number;
@@ -46,12 +47,14 @@ const Home: React.FC = () => {
   const navigation = useNavigation();
   const { cities } = useCities();
 
-  const [citiesWether, setCitiesWether] = useState<CityWether[]>([] as CityWether[])
+  const [loading, setLoading] = useState(false);
+  const [citiesWeather, setCitiesWeather] = useState<CityWeather[]>([] as CityWeather[]);
 
   useEffect(() => {
+    setLoading(true);
     Promise.all(
       cities.map(async (item) => {
-        const response = await apiWether.get('', {
+        const response = await apiWeather.get('', {
           params: {
             lat: item.location.lat,
             lon: item.location.lng,
@@ -63,7 +66,11 @@ const Home: React.FC = () => {
         return response.data;
       })
     ).then((response) => {
-      setCitiesWether(response);
+      setCitiesWeather(response);
+    }).catch((error) => {
+      console.log(error)
+    }).finally(() => {
+      setLoading(false);
     })
   }, [cities])
 
@@ -78,19 +85,27 @@ const Home: React.FC = () => {
         </HeaderAddCityButton>
       </Header>
 
-      <FlatList
-        contentContainerStyle={{padding: 24}}
-        data={citiesWether}
-        renderItem={({ item, index }) => {
-          const renderItem: CityWether = item as CityWether;
-          return (
-            <CityWeatherComponentListItem city={cities[index]} cityWether={renderItem} />
-          )
-        }}
-        keyExtractor={(_, index) => {
-          return index.toString()
-        }}
-      />
+      {loading ? (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator size="large" color={colors.light} />
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={{padding: 24}}
+          data={citiesWeather}
+          renderItem={({ item, index }) => {
+            const renderItem: CityWeather = item as CityWeather;
+            return (
+              <CityWeatherComponentListItem city={cities[index]} cityWeather={renderItem} />
+            )
+          }}
+          keyExtractor={(_, index) => {
+            return index.toString()
+          }}
+        />
+      )}
+
+
     </Container>
   );
 };

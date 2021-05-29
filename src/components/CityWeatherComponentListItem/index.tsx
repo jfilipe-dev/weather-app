@@ -1,5 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+
+import { useCities } from '../../hooks/Cities';
 
 import { Container, Section, Subtitle, Title, Weather, Temperature, Icon } from './styles';
 
@@ -20,7 +23,7 @@ interface Daily {
   weather: Weather[];
 }
 
-interface CityWether {
+interface CityWeather {
   current: {
     dt: number;
     temp: number;
@@ -44,25 +47,38 @@ interface City {
 
 interface CityWeatherComponentListItemProps {
   //isFavorited: boolean
-  cityWether: CityWether;
+  cityWeather: CityWeather;
   city: City;
 }
 
-const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> = ({cityWether, city}) => {
+const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> = ({cityWeather, city}) => {
+  const { removeCity } = useCities();
+  const navigation = useNavigation();
+
   return (
-    <Container>
+    <Container
+      activeOpacity={0.4}
+      onLongPress={() => removeCity(city.id)}
+      onPress={() => navigation.navigate('CityWeather', {
+        cityName: city?.political.city,
+        dailyWeather: cityWeather.daily,
+      })}
+    >
       <Section>
         <View>
-          <Title>{city.political.city}</Title>
-          <Subtitle>{city.political.state} - {city.political.country}</Subtitle>
+          <Title>{city?.political.city}</Title>
+          <Subtitle>{city?.political.state} - {city?.political.country}</Subtitle>
         </View>
-        <Temperature>{cityWether.current.temp} º</Temperature>
+        <View style={{alignItems: 'center'}}>
+          <Subtitle>Agora</Subtitle>
+        <Temperature>{cityWeather.current.temp}º</Temperature>
+        </View>
       </Section>
 
       <Section>
         <View>
-          <Weather>{cityWether.current.weather[0].description}</Weather>
-          <Subtitle>{cityWether.daily[0].temp.min}º - {cityWether.daily[0].temp.max}º</Subtitle>
+          <Weather>{cityWeather.current.weather[0].description}</Weather>
+          <Subtitle>{cityWeather.daily[0].temp.min}º - {cityWeather.daily[0].temp.max}º</Subtitle>
         </View>
         {/* {isFavorited && <Icon name="heart" />} */}
       </Section>

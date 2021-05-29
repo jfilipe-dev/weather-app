@@ -4,7 +4,9 @@ import {colors} from '../../config/styles';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
-export const Container = styled.View``;
+export const Container = styled.View`
+  flex: 1;
+`;
 
 export const Header = styled.View`
   padding: 0 24px;

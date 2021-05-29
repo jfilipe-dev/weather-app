@@ -23,6 +23,7 @@ interface City {
 interface CitiesContextData {
   cities: City[];
   addCity(newCity: City): Promise<void>;
+  removeCity(cityId: string): Promise<void>;
 }
 
 const CitiesContext = createContext<CitiesContextData>({} as CitiesContextData);
@@ -32,11 +33,10 @@ export const CitiesProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const getCities = async () => {
-      const jsonValue = await AsyncStorage.getItem('@wether:cities');
+      const jsonValue = await AsyncStorage.getItem('@Weather:cities');
 
       if (jsonValue) {
         const parsedCities = JSON.parse(jsonValue);
-        console.log('aqui', parsedCities);
         setcities(parsedCities);
       }
     }
@@ -53,12 +53,23 @@ export const CitiesProvider: React.FC = ({ children }) => {
     console.log('chegou');
 
     const jsonValue = JSON.stringify(newCities);
-    await AsyncStorage.setItem('@wether:cities', jsonValue);
+    await AsyncStorage.setItem('@Weather:cities', jsonValue);
   }, [cities]);
+
+  const removeCity = useCallback(async (cityId: string) => {
+    console.log(cityId)
+    const newCities = cities.filter(item => item.id !== cityId);
+
+    console.log(newCities)
+    setcities(newCities);
+
+    const jsonValue = JSON.stringify(newCities)
+    await AsyncStorage.setItem('@Weather:cities', jsonValue)
+  }, [cities])
 
   return (
     <CitiesContext.Provider
-      value={{ cities, addCity }}
+      value={{ cities, addCity, removeCity }}
     >
       {children}
     </CitiesContext.Provider>

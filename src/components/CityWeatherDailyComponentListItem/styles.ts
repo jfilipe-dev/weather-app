@@ -1,9 +1,10 @@
 import styled from 'styled-components/native';
+
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import { colors } from '../../config/styles';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.View`
   padding: 6px 12px;
   margin: 12px 0;
   background-color: ${colors.lightPrincipal};
@@ -15,6 +16,7 @@ export const Title = styled.Text`
   font-weight: bold;
   color: ${colors.light};
   margin-bottom: 4px;
+  text-transform: capitalize;
 `;
 
 export const Section = styled.View`

@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import AddCity from '../screens/AddCity';
+import CityWeather from '../screens/CityWeather';
 
 import {colors} from '../config/styles';
 
@@ -19,6 +20,7 @@ export default function App() {
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="AddCity" component={AddCity} />
+      <Stack.Screen name="CityWeather" component={CityWeather} />
     </Stack.Navigator>
   );
 }
