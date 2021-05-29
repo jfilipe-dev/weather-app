@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
+import { colors } from '../../../config/styles';
 
 import { useCities } from '../../../hooks/Cities';
 
@@ -68,7 +69,7 @@ const CityComponentListItem: React.FC<CityComponentListItemProps> = ({cityProps}
         <CountryName>{political.state} - {political.country}</CountryName>
       </View>
       <AddCityButton onPress={handleAddCity} enabled={!isCityAdded}>
-        <Icon name={isCityAdded ? 'check' : 'plus'} />
+        <Icon name={isCityAdded ? 'check' : 'plus'} color={isCityAdded ? colors.light : colors.principal} />
       </AddCityButton>
     </Container>
   );

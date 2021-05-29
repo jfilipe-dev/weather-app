@@ -74,16 +74,16 @@ const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> 
         </View>
         <View style={{alignItems: 'center'}}>
           <Subtitle>Agora</Subtitle>
-        <Temperature>{cityWeather.current.temp}º</Temperature>
+        <Temperature>{cityWeather.current.temp.toFixed(0)}º</Temperature>
         </View>
       </Section>
 
       <Section>
         <View>
           <Weather>{cityWeather.current.weather[0].description}</Weather>
-          <Subtitle>{cityWeather.daily[0].temp.min}º - {cityWeather.daily[0].temp.max}º</Subtitle>
+          <Subtitle>{cityWeather.daily[0].temp.min.toFixed(0)}º - {cityWeather.daily[0].temp.max.toFixed(0)}º</Subtitle>
         </View>
-        {city.isFavorited && <Icon name="heart" />}
+        {city?.isFavorited && <Icon name="heart" />}
       </Section>
     </Container>
   );

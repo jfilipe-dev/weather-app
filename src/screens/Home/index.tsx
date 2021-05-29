@@ -13,6 +13,12 @@ import {
   HeaderAddCityButton,
   HeaderAddCityButtonText,
   Icon,
+  Section,
+  HelperText,
+  OpsText,
+  InformationText,
+  ActionButton,
+  ActionButtonText,
 } from './styles';
 import apiWeather from '../../services/apiWeather';
 import { colors } from '../../config/styles';
@@ -85,24 +91,37 @@ const Home: React.FC = () => {
         </HeaderAddCityButton>
       </Header>
 
-      {loading ? (
-        <View style={{flex: 1, justifyContent: 'center'}}>
+      {loading && (
+        <Section>
           <ActivityIndicator size="large" color={colors.light} />
-        </View>
-      ) : (
+        </Section>
+      )}
+
+      {!loading && cities.length > 0 && (
         <FlatList
-          contentContainerStyle={{padding: 24}}
-          data={citiesWeather}
-          renderItem={({ item, index }) => {
-            const renderItem: CityWeather = item as CityWeather;
-            return (
-              <CityWeatherComponentListItem city={cities[index]} cityWeather={renderItem} cityIndex={index} />
-            )
-          }}
-          keyExtractor={(_, index) => {
-            return index.toString()
-          }}
-        />
+        ListHeaderComponent={() => <HelperText>Para excluir uma cidade pressione e segure</HelperText>}
+        contentContainerStyle={{padding: 24}}
+        data={citiesWeather}
+        renderItem={({ item, index }) => {
+          const renderItem: CityWeather = item as CityWeather;
+          return (
+            <CityWeatherComponentListItem city={cities[index]} cityWeather={renderItem} cityIndex={index} />
+          )
+        }}
+        keyExtractor={(_, index) => {
+          return index.toString()
+        }}
+      />
+      )}
+
+      {!loading && cities.length === 0 && (
+        <Section>
+          <OpsText>Ops...</OpsText>
+          <InformationText>Parece que você ainda não adicionou uma cidade</InformationText>
+          <ActionButton onPress={() => navigation.navigate('AddCity')}>
+            <ActionButtonText>Adicionar cidade</ActionButtonText>
+          </ActionButton>
+        </Section>
       )}
 
 

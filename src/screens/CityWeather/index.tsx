@@ -6,7 +6,7 @@ import { useCities } from '../../hooks/Cities';
 
 import CityWeatherDailyComponentListItem from '../../components/CityWeatherDailyComponentListItem';
 
-import { Container, FavoriteButton, Icon } from './styles';
+import { Container, FavoriteButton, Icon, HelperText } from './styles';
 
 interface Weather {
   description: string;
@@ -48,6 +48,7 @@ const CityWeather: React.FC<CityWeatherProps> = ({route}) => {
 
       <FlatList
           contentContainerStyle={{paddingHorizontal: 24, paddingVertical: 12}}
+          ListHeaderComponent={() => <HelperText>Previsão para os próximos 7 dias</HelperText>}
           data={route.params.dailyWeather}
           renderItem={({ item, index }) => {
             const renderItem: Daily = item as Daily;

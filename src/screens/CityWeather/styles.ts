@@ -12,3 +12,11 @@ export const Icon = styled(Entypo)`
   color: ${colors.like};
   font-size: 28px;
 `;
+
+export const HelperText = styled.Text`
+  text-align: center;
+  color: ${colors.light};
+  font-weight: bold;
+  font-size: 14px;
+  margin: 12px 0;
+`;

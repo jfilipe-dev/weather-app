@@ -39,6 +39,53 @@ export const HeaderAddCityButtonText = styled.Text`
 `;
 
 export const Icon = styled(Entypo)`
-  color: ${colors.light};
+  color: ${colors.principal};
   font-size: 26px;
+`;
+
+export const Section = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+`;
+
+export const HelperText = styled.Text`
+  text-align: center;
+  color: ${colors.light};
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 12px;
+`;
+
+export const OpsText = styled.Text`
+  text-align: center;
+  color: ${colors.light};
+  font-weight: bold;
+  font-size: 22px;
+`;
+
+export const InformationText = styled.Text`
+  text-align: center;
+  color: ${colors.light};
+  font-weight: bold;
+  font-size: 24px;
+`;
+
+export const ActionButton = styled(RectButton)`
+  height: 52px;
+  border-radius: 10px;
+  width: 100%;
+  background-color: ${colors.second};
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+`;
+
+export const ActionButtonText = styled.Text`
+  text-align: center;
+  color: ${colors.principal};
+  font-weight: bold;
+  font-size: 18px;
 `;

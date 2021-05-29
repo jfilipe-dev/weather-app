@@ -36,6 +36,5 @@ export const AddCityButton = styled(RectButton)`
 `;
 
 export const Icon = styled(Entypo)`
-  color: ${colors.light};
   font-size: 26px;
 `;
