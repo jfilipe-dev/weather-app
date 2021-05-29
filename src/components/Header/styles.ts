@@ -16,6 +16,7 @@ export const HeaderTitle = styled.Text`
   font-size: 18px;
   font-weight: bold;
   color: ${colors.light};
+  text-transform: capitalize;
 `;
 
 export const BackButton = styled.TouchableOpacity`

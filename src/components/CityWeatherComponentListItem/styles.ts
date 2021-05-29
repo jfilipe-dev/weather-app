@@ -36,6 +36,7 @@ export const Weather = styled.Text`
   font-size: 14px;
   font-weight: bold;
   color: ${colors.second};
+  text-transform: capitalize;
 `;
 
 export const Subtitle = styled.Text`

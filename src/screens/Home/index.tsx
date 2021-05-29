@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { useCities } from '../../hooks/Cities';
@@ -16,9 +16,37 @@ import {
 } from './styles';
 import apiWether from '../../services/apiWether';
 
+interface Weather {
+  description: string;
+}
+
+interface Daily {
+  dt: number;
+  temp: {
+    day: number;
+    min: number;
+    max: number;
+    night: number;
+    eve: number;
+    morn: number;
+  },
+  weather: Weather[];
+}
+
+interface CityWether {
+  current: {
+    dt: number;
+    temp: number;
+    weather: Weather[];
+  },
+  daily: Daily[];
+}
+
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const { cities } = useCities();
+
+  const [citiesWether, setCitiesWether] = useState<CityWether[]>([] as CityWether[])
 
   useEffect(() => {
     Promise.all(
@@ -26,17 +54,17 @@ const Home: React.FC = () => {
         const response = await apiWether.get('', {
           params: {
             lat: item.location.lat,
-            lon: item.location.lng
+            lon: item.location.lng,
+            units: 'metric',
+            lang: 'pt_Br'
           }
         })
 
         return response.data;
       })
     ).then((response) => {
-      console.log(response);
+      setCitiesWether(response);
     })
-
-    console.log(cities[0].political.city);
   }, [cities])
 
   return (
@@ -52,16 +80,15 @@ const Home: React.FC = () => {
 
       <FlatList
         contentContainerStyle={{padding: 24}}
-        data={cities}
-        renderItem={({ item }) => {
-          const renderItem: any = item as any;
+        data={citiesWether}
+        renderItem={({ item, index }) => {
+          const renderItem: CityWether = item as CityWether;
           return (
-            <CityWeatherComponentListItem />
+            <CityWeatherComponentListItem city={cities[index]} cityWether={renderItem} />
           )
         }}
-        keyExtractor={(item) => {
-          const renderItem: any = item as any;
-          return renderItem.id.toString()
+        keyExtractor={(_, index) => {
+          return index.toString()
         }}
       />
     </Container>
