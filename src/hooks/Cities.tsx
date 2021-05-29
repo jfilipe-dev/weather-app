@@ -17,13 +17,15 @@ interface City {
     city: string;
     state: string;
     country: string;
-  }
+  },
+  isFavorited: boolean;
 }
 
 interface CitiesContextData {
   cities: City[];
   addCity(newCity: City): Promise<void>;
   removeCity(cityId: string): Promise<void>;
+  favoriteCity(cityIndex: number): Promise<void>;
 }
 
 const CitiesContext = createContext<CitiesContextData>({} as CitiesContextData);
@@ -65,11 +67,21 @@ export const CitiesProvider: React.FC = ({ children }) => {
 
     const jsonValue = JSON.stringify(newCities)
     await AsyncStorage.setItem('@Weather:cities', jsonValue)
-  }, [cities])
+  }, [cities]);
+
+  const favoriteCity = useCallback(async (cityIndex: number) => {
+    const newCities = [...cities];
+    newCities[cityIndex].isFavorited = !newCities[cityIndex].isFavorited;
+
+    setcities(newCities);
+
+    const jsonValue = JSON.stringify(newCities);
+    await AsyncStorage.setItem('@Weather:cities', jsonValue);
+  }, [cities]);
 
   return (
     <CitiesContext.Provider
-      value={{ cities, addCity, removeCity }}
+      value={{ cities, addCity, removeCity, favoriteCity }}
     >
       {children}
     </CitiesContext.Provider>

@@ -42,16 +42,18 @@ interface City {
     city: string;
     state: string;
     country: string;
-  }
+  },
+  isFavorited: boolean;
 }
 
 interface CityWeatherComponentListItemProps {
   //isFavorited: boolean
   cityWeather: CityWeather;
   city: City;
+  cityIndex: number;
 }
 
-const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> = ({cityWeather, city}) => {
+const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> = ({cityWeather, city, cityIndex}) => {
   const { removeCity } = useCities();
   const navigation = useNavigation();
 
@@ -62,6 +64,7 @@ const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> 
       onPress={() => navigation.navigate('CityWeather', {
         cityName: city?.political.city,
         dailyWeather: cityWeather.daily,
+        cityIndex
       })}
     >
       <Section>
@@ -80,7 +83,7 @@ const CityWeatherComponentListItem: React.FC<CityWeatherComponentListItemProps> 
           <Weather>{cityWeather.current.weather[0].description}</Weather>
           <Subtitle>{cityWeather.daily[0].temp.min}º - {cityWeather.daily[0].temp.max}º</Subtitle>
         </View>
-        {/* {isFavorited && <Icon name="heart" />} */}
+        {city.isFavorited && <Icon name="heart" />}
       </Section>
     </Container>
   );

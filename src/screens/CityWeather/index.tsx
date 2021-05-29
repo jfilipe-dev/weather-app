@@ -1,10 +1,12 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 import Header from '../../components/Header';
+
+import { useCities } from '../../hooks/Cities';
 
 import CityWeatherDailyComponentListItem from '../../components/CityWeatherDailyComponentListItem';
 
-import { Container } from './styles';
+import { Container, FavoriteButton, Icon } from './styles';
 
 interface Weather {
   description: string;
@@ -28,23 +30,35 @@ interface CityWeatherProps {
     params: {
       cityName: string;
       dailyWeather: Daily[];
+      cityIndex: number;
     }
   }
 }
 
 const CityWeather: React.FC<CityWeatherProps> = ({route}) => {
+  const { favoriteCity, cities } = useCities();
+
   return (
     <Container>
       <Header title={route.params.cityName}>
-
+        <FavoriteButton onPress={() => favoriteCity(route.params.cityIndex)}>
+          <Icon name={cities[route.params.cityIndex].isFavorited ? 'heart' : 'heart-outlined'} />
+        </FavoriteButton>
       </Header>
 
-      <ScrollView contentContainerStyle={{padding: 24}}>
-        {route.params.dailyWeather.map((item, index) => (
-           index > 0 && <CityWeatherDailyComponentListItem key={index.toString()} daily={item} />
-        ))}
-      </ScrollView>
-
+      <FlatList
+          contentContainerStyle={{paddingHorizontal: 24, paddingVertical: 12}}
+          data={route.params.dailyWeather}
+          renderItem={({ item, index }) => {
+            const renderItem: Daily = item as Daily;
+            return (
+              <CityWeatherDailyComponentListItem key={index.toString()} daily={renderItem} />
+            )
+          }}
+          keyExtractor={(_, index) => {
+            return index.toString()
+          }}
+        />
     </Container>
   );
 }

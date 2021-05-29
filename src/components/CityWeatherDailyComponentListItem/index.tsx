@@ -27,6 +27,7 @@ interface CityWeatherDailyComponentListItemProps {
 }
 
 const CityWeatherDailyComponentListItem: React.FC<CityWeatherDailyComponentListItemProps> = ({daily}) => {
+
   const date = useMemo(() => {
     const newDate = fromUnixTime(daily.dt);
 

@@ -51,6 +51,7 @@ const CityComponentListItem: React.FC<CityComponentListItemProps> = ({cityProps}
       location: cityProps.geometry.location,
       id: cityProps.place_id,
       political,
+      isFavorited: false,
     }
 
     await addCity(newCity as any);

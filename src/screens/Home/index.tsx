@@ -96,7 +96,7 @@ const Home: React.FC = () => {
           renderItem={({ item, index }) => {
             const renderItem: CityWeather = item as CityWeather;
             return (
-              <CityWeatherComponentListItem city={cities[index]} cityWeather={renderItem} />
+              <CityWeatherComponentListItem city={cities[index]} cityWeather={renderItem} cityIndex={index} />
             )
           }}
           keyExtractor={(_, index) => {
