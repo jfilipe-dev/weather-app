@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiKey = 'AIzaSyB0zdlYckT8uv2IM4oqnKNVKqAH_oP3_Vg'
+const apiKey = 'AIzaSyB1aWRTfvEn3R-HSwhViYcSnOXkkxtT6Vw'
 
 const apiCity = axios.create({
   baseURL: `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&language=pt-BR`,
