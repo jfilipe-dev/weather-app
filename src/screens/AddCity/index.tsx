@@ -42,9 +42,7 @@ const AddCity: React.FC = () => {
 
       const currentCities: CityProps[] = response.data.results;
 
-      const realCities = currentCities.filter((item: CityProps) => item.address_components.find(item => item.types.includes('administrative_area_level_2')))
-
-      console.log(realCities)
+      const realCities = currentCities.filter((item: CityProps) => item.address_components.find(item => item.types.includes('administrative_area_level_2')));
 
       setCities(realCities);
     } catch (error) {

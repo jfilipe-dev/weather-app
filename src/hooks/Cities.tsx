@@ -46,23 +46,18 @@ export const CitiesProvider: React.FC = ({ children }) => {
     getCities();
   }, [])
 
-
   const addCity = useCallback(async (newCity: City) => {
     const newCities = [newCity, ...cities];
 
     setcities(newCities);
-
-    console.log('chegou');
 
     const jsonValue = JSON.stringify(newCities);
     await AsyncStorage.setItem('@Weather:cities', jsonValue);
   }, [cities]);
 
   const removeCity = useCallback(async (cityId: string) => {
-    console.log(cityId)
     const newCities = cities.filter(item => item.id !== cityId);
 
-    console.log(newCities)
     setcities(newCities);
 
     const jsonValue = JSON.stringify(newCities)

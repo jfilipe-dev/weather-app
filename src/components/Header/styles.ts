@@ -10,6 +10,8 @@ export const Container = styled.View`
   background: ${colors.principal};
   flex-direction: row;
   align-items: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 `;
 
 export const HeaderTitle = styled.Text`

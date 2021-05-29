@@ -4,6 +4,10 @@ import {colors} from '../../config/styles';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
+interface ChangeUnitsProps {
+  isActived: boolean;
+}
+
 export const Container = styled.View`
   flex: 1;
 `;
@@ -88,4 +92,29 @@ export const ActionButtonText = styled.Text`
   color: ${colors.principal};
   font-weight: bold;
   font-size: 18px;
+`;
+
+export const ChangeUnitsContainer = styled.View`
+  padding: 0 12px;
+  padding-bottom: 24px;
+  background-color: ${colors.principal};
+  flex-direction: row;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+`;
+
+export const ChangeUnitsButton = styled(RectButton)<ChangeUnitsProps>`
+  margin: 0 12px;
+  flex: 1;
+  background-color: ${(props) => props.isActived ? colors.lightPrincipal : colors.second};
+  justify-content: center;
+  height: 40px;
+  border-radius: 6px;
+`;
+
+export const ChangeUnitsButtonText = styled.Text<ChangeUnitsProps>`
+  text-align: center;
+  color: ${(props) => props.isActived ? colors.light : colors.principal};
+  font-weight: bold;
+  font-size: 14px;
 `;

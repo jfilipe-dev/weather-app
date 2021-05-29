@@ -19,6 +19,9 @@ import {
   InformationText,
   ActionButton,
   ActionButtonText,
+  ChangeUnitsContainer,
+  ChangeUnitsButton,
+  ChangeUnitsButtonText,
 } from './styles';
 import apiWeather from '../../services/apiWeather';
 import { colors } from '../../config/styles';
@@ -55,6 +58,7 @@ const Home: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [citiesWeather, setCitiesWeather] = useState<CityWeather[]>([] as CityWeather[]);
+  const [units, setUnits] = useState('metric');
 
   useEffect(() => {
     setLoading(true);
@@ -64,7 +68,7 @@ const Home: React.FC = () => {
           params: {
             lat: item.location.lat,
             lon: item.location.lng,
-            units: 'metric',
+            units,
             lang: 'pt_Br'
           }
         })
@@ -78,7 +82,7 @@ const Home: React.FC = () => {
     }).finally(() => {
       setLoading(false);
     })
-  }, [cities])
+  }, [cities, units])
 
   return (
     <Container>
@@ -90,6 +94,16 @@ const Home: React.FC = () => {
           </HeaderAddCityButtonText>
         </HeaderAddCityButton>
       </Header>
+
+      <ChangeUnitsContainer>
+        <ChangeUnitsButton onPress={() => setUnits('metric')} isActived={units === 'metric'} enabled={units !== 'metric'}>
+          <ChangeUnitsButtonText isActived={units === 'metric'}>Celsius</ChangeUnitsButtonText>
+        </ChangeUnitsButton>
+        <ChangeUnitsButton onPress={() => setUnits('imperial')} isActived={units === 'imperial'} enabled={units !== 'imperial'}>
+          <ChangeUnitsButtonText isActived={units === 'imperial'}>Fahrenheit</ChangeUnitsButtonText>
+        </ChangeUnitsButton>
+      </ChangeUnitsContainer>
+
 
       {loading && (
         <Section>
