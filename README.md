@@ -1,7 +1,7 @@
 # Weather App
 #### Weather Forecast App.
 
-### 📺 <a href="https://www.figma.com/file/GGNXXLDnqzsJ4yIFNYDaCD/Weather-app?node-id=0%3A1">Figma project</a>
+### 📺 <a href="https://www.figma.com/file/GGNXXLDnqzsJ4yIFNYDaCD/Weather-app?node-id=0%3A1" target="blank">Figma project</a>
 
 ### 👨🏻‍💻 Stack and extensions
 - React native with typescript
